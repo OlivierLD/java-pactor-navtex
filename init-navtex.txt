@@ -1,0 +1,53 @@
+#
+# All the commands emitted by GetFax in NAVTEX mode.
+# Initialization of the NAVTEX mode
+#
+# Lines beginning with '#' are comments.
+# Whatever follows a ';' is not transmitted
+# - Note: if a line begins with a ';', an empty string is transmitted.
+#         if a line begins with a '#', nothing is transmitted.
+#                      
+# start console -modem-eos modem -sync on -echo-cmd off -user-prompt "" -file input.txt -log-output [log-file.txt]
+#
+; <Empty line>
+VER                   ; Version
+RESTART               ; RESTart, Factory Settings
+TERM 4                ; Term 0:Simple terminal mode. 1:Terminal mode with delayed echo. 2:Split screen terminal mode. 3:Enhanced split screen. 4:Split screen with command prompt recognition. 5:Split screen also for Packet-Radio
+SERB                  ; SERBaud request
+# TRX RTS 1
+AM                    ; Amtor. Activates the AMTOR Prompt.
+TR 0                  ; 0:TX and RX shift normal, 1:Only RX shift reverse, 2:Only TX shift reverse, 3:TX and RX shift reverse
+PT                    ; Returns to PACTOR from AMTOR, RTTY, PSK31 or CW
+QRTC 4                ; QRTChr (Default 4, <Ctrl+D>) character to close link
+ESC 27                ; ESCchr Set escape character
+PTCH 31               ; PTChn 1...31. Hostmode channel for Pactor
+MAXE 35               ; MAXErr 30...255
+LF 0                  ; LFignore 0:no insertion of <LF>. 1:insertion of <LF> after each <CR>. 2:multi-<CR>-supression
+CM 0                  ; CMsg (Default 1). 0:Switch connect text off, 1:Switch connect text on, 2:Switch connect text on and evaluation of special functions
+REM 0                 ; REMote
+BOX 0                 ; Box 0:Mailbox control with // sequence. 1:Mailbox in direct mode. 2:As in 0 but only personal messages. 3:As in 1 but only personal messages.
+MAIL 0                ; MAil 0:New messages not reported. 1:New messages reported on connect
+CHOB 0                ; CHOBell 0:CHANGEOVER bell off. 1:CHANGEOVER bell on
+UML 0                 ; UMlauts  0:No umlaut in Huffman. 1:German umlauts in Huffman
+# TRX S 0
+# TRX DU 0
+U *1                  ; Unproto 1...10, Transmission mode for Unproto operation. 30…41  *1…5:Number of packet repetitions
+BK 24                 ; BKchr 1...127. Defines BreakIn character. Default 25 (<Ctrl+Y>)
+TIME ${utc.time}      ; TIme Reads or sets time. HH:MI:SS or HHMISS
+DATE ${utc.date}      ; DAte DD.MM.YY
+ST 2                  ; STatus 0:Status checking on (see text). 1:Status checking on. 2:Status checking on (automatic status output)
+PAC PRB 0             ; PACket PRBox
+PAC CM 0              ; PACket CMsg 
+PAC CB 0              ; PACket CBell
+PAC M 0               ; PACket Monitor 
+PAC US 10             ; PACket USers
+FR MO 0               ; FRack 
+SYS SERN              ; SYStest, Serial Number
+MY *SCSPTC*           ; MYcall Default ROM-Callsign (2 to 8 characters)
+LICENSE               ; LICENSE
+TONES 2               ; TOnes . Default 0. 0:Low tones (1200/1400 Hz). 1:High tones (2300/2100 Hz). 2:Freely adjustable tones - definable with Mark - Space commands. 3:PACTOR-III tones 1200/1400 Hz 4:Standard PACTOR-III tones 1400/1600 Hz 5:PACTOR-III tones 1600/1800 Hz
+MARK 1600             ; MARk (300...2700) Set Mark Frequency
+SPACE 1400            ; SPAce (300...2700) Set Space Frequency
+L 1                   ; Listen 0:Listen mode disabled. 1:Listen mode enabled. 2..4:reserved 5:Listen PACTOR-I only
+ARX 1                 ; ARX 0:AMTOR phasing disabled. 1:AMTOR phasing enabled
+BC 1                  ; BC Enables FEC and NAVTEX reception. 0:FEC reception disabled. 1:FEC reception enabled.
