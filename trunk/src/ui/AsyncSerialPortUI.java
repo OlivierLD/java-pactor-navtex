@@ -31,6 +31,7 @@ public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInter
 
   private final static String _VERBOSE     = "-verbose";  
   private final static String _FILE        = "-file";
+  private final static String _STEP_BY_STEP = "-step-by-step";
   private final static String _MODEM_COMM  = "-modem-comm";
   private final static String _SYNC        = "-sync";
   private final static String _MODEM_EOS   = "-modem-eos";
@@ -53,6 +54,7 @@ public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInter
   private static int parity          = 0;
   private static boolean half_duplex = true;
   private static String fileName     = null;
+  private static boolean step_by_step = false;
   private static boolean behaveSynchronously = false;
   private static String modemEos     = "MODEM";
   private static String logFileName  = null;
@@ -98,7 +100,8 @@ public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInter
                        "  " + _STOPBIT + " [1]\n" + 
                        "  " + _HALF_DUPLEX + " [true]|false|yes|no|on|off\n" + 
                        "  " + _VERBOSE + " true|[false]|yes|no|on|off\n" + 
-                       "  " + _FILE + " <script, commands in a text file>\n" + 
+                       "  " + _FILE + " <script, commands in a text file>\n" +                  
+                       "  " + _STEP_BY_STEP + " true|[false]|yes|no|on|off\n" +
                        "  " + _MODEM_COMM + " [true]|false|yes|no|on|off\n" + 
                        "  " + _ECHO_CMD + " [true]|false|yes|no|on|off\n" + 
                        "  " + _SYNC + " true|[false]|yes|no|on|off\n" + 
@@ -265,6 +268,10 @@ public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInter
         verbose = (args[i+1].equalsIgnoreCase("TRUE") || 
                    args[i+1].equalsIgnoreCase("YES") || 
                    args[i+1].equalsIgnoreCase("ON"));
+      else if (args[i].trim().equals(_STEP_BY_STEP))
+        step_by_step = (args[i+1].equalsIgnoreCase("TRUE") || 
+                        args[i+1].equalsIgnoreCase("YES") || 
+                        args[i+1].equalsIgnoreCase("ON"));
       else if (args[i].trim().equals(_FILE))
         fileName = args[i+1];
       else if (args[i].trim().equals(_MODEM_COMM))
@@ -582,7 +589,24 @@ public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInter
         {
           try 
           { 
-            userInput = input.readLine(); 
+            userInput = input.readLine();
+            if (step_by_step)
+            {
+              String resp = userInput("Execute ["+ userInput + "] command [y]|n|c|k (C for Cancel, K for Keep going and stop asking) ? > ");
+              if (resp.trim().equalsIgnoreCase("N"))
+              {
+                // Cancel this line only
+                userInput = "# [" + userInput + "] Canceled.";
+              }
+              else if (resp.trim().equalsIgnoreCase("C"))
+              {
+                userInput = null;
+              }
+              else if (resp.trim().equalsIgnoreCase("K"))
+              {
+                step_by_step = false;
+              }
+            }
           } 
           catch (IOException ioe)
           {
