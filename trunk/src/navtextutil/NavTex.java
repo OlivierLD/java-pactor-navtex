@@ -137,7 +137,7 @@ public class NavTex
   public final static char TILDA            = 0x7E; // (~)
   public final static char DEL              = 0x7F; // Delete
   
-  public final static String MESSAGE_HEADER = "ZCZC";
+  public final static String MESSAGE_HEADER = "ZCZC ";
   public final static String MESSAGE_FOOTER = "NNNN";
     
   public static byte[] decodeNavtex(byte[] ba)
