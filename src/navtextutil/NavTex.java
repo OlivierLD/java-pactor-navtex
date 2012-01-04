@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NavTex
 {
@@ -143,7 +144,7 @@ public class NavTex
   public static byte[] decodeNavtex(byte[] ba)
   {
     byte[] decoded = null;
-    ArrayList<Byte> alb = new ArrayList<Byte>();
+    List<Byte> alb = new ArrayList<Byte>();
     for (int i=0; i<ba.length; i++)
     {
       if (i<(ba.length - 3) &&  ba[i] == STX && ba[i+2] == SOH)
