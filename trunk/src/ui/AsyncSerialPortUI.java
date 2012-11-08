@@ -20,7 +20,8 @@ import serialmodemconsole.AsyncCommunication;
 import serialmodemconsole.ModemClientInterface;
 import serialmodemconsole.SerialModemInterface;
 
-public class AsyncSerialPortUI implements SerialModemInterface, ModemClientInterface
+public class AsyncSerialPortUI implements SerialModemInterface, 
+                                          ModemClientInterface
 {
   private final static String _PORT        = "-port";
   private final static String _BR          = "-br";
