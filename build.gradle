@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'scala'
+    id 'maven'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+group = 'oliv.pi4j.samples'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/java']
+        }
+        scala {
+            srcDirs = ['src/scala']
+        }
+    }
+    test {
+        java {
+            srcDir 'tests/java'
+        }
+    }
+}
+
+dependencies {
+    compile 'org.rxtx:rxtx:2.1.7'
+    compile 'org.scala-lang:scala-library:2.11.8'
+}
+
+shadowJar {
+    zip64 true
+}

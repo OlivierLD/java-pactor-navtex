@@ -9,8 +9,6 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import ocss.nmea.parser.StringParsers;
-
 import serialmodemconsole.AsyncCommunication;
 import serialmodemconsole.CablePilotClientInterface;
 import serialmodemconsole.SerialModemInterface;
@@ -152,13 +150,22 @@ public class CloningCablePilot implements SerialModemInterface, CablePilotClient
   
   private static String generateCheckSum(String str)
   {
-    int cs = StringParsers.calculateCheckSum(str);
+    int cs = calculateCheckSum(str);
     String gcs = Integer.toString(cs, 16).toUpperCase();
     while (gcs.length() < 2)
       gcs = "0" + gcs;
     return gcs;
   }
-  
+
+  public static int calculateCheckSum(String str) {
+    int cs = 0;
+    char[] ca = str.toCharArray();
+    cs = ca[0];
+    for (int i = 1; i < ca.length; i++)
+      cs = cs ^ ca[i]; // XOR
+    return cs;
+  }
+
   public static String userInput(String prompt)
   {
     String inputString = "";
